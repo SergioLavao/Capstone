@@ -1,0 +1,30 @@
+import * as THREE from 'three';
+import * as CANNON from 'cannon';
+import { CannonDebugRenderer } from '../../lib/cannon/CannonDebugRenderer';
+import { Client } from '../client/Client';
+import { IWorldEntity } from '../interfaces/IWorldEntity';
+export declare class World {
+    updateTimeOut: any;
+    physicsFrameTime: number;
+    updateFrameTime: number;
+    cannonDebugRenderer: CannonDebugRenderer;
+    client: Client;
+    players: any[];
+    debugMsg: string[];
+    renderer: THREE.WebGLRenderer;
+    camera: THREE.PerspectiveCamera;
+    timeScale: number;
+    clock: THREE.Clock;
+    graphicsWorld: THREE.Scene;
+    physicsWorld: CANNON.World;
+    constructor(mapPath: string);
+    update(): void;
+    initPhysics(): void;
+    updatePhysics(): void;
+    initRenderer(): void;
+    updateGraphics(): void;
+    private generateHTML;
+    loadMap(gltf: any): void;
+    add(worldEntity: IWorldEntity): void;
+    gameDebug(): void;
+}
