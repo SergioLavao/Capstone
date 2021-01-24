@@ -5,17 +5,12 @@ const setUpListeners = (io, socket) =>
 {
 	Promise.promisifyAll(socket);
 
-	let clients = io.sockets.clients();
+	var clients = io.sockets.sockets;
 
-    socket.on('start_game', () =>
-    {
-		io.sockets.emit('add_player', [{ id: 123 }]);
+	console.log("new user connected!");
 
-		io.clients((error, clients) => {
-		      if (error) throw error;
-		      console.log(clients);
-		});
-    });
+	clients.forEach((client) => console.log(client.id));
+
 };
 
 module.exports = setUpListeners;

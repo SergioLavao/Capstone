@@ -47,7 +47,7 @@ export class UI
 
 		$('#ui-container').append(content);					
 
-		$( "form" ).submit(function (e) {
+		$( "#loginForm" ).submit(function (e) {
 
 			e.preventDefault();
 
@@ -79,13 +79,29 @@ export class UI
 	public openChatInput(): void
 	{
 
-		console.log("chat openned!");
+		let scope = this;
+
+		$('#chat').append(`<form id="chatInput"><input name="message" placeholder="Type a new message..." type="text"></form>`);			
+
+		$( "#chat" ).submit(function (e) {
+
+			e.preventDefault();
+
+			let data = new FormData(document.getElementById("chatInput") as HTMLFormElement);
+
+			console.log("chat appended!");
+
+			scope.closeChatInput();
+
+		});
 
 	}
 
 	public closeChatInput(): void
 	{
-		console.log("chat closed");
+
+		$('#chatInput').remove();
+
 	}
 
 	public appendToChat( msg:string ): void

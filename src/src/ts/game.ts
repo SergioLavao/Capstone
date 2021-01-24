@@ -2,6 +2,7 @@ import * as $ from 'jquery';
 
 import '../css/main.css';
 import { Engine } from './engine/Engine';
+import { Client } from "./server/Client";
 import { API } from './API';
 import { UI } from './UI';
 
@@ -13,6 +14,13 @@ export class Game
 	public ui: UI;
 	public api: API;
 
+	public client: Client;
+
+	public keyFunctions: any = {
+		chat : "KeyT",
+		cancel : "Escape"
+	};
+
 	constructor()
 	{
 
@@ -20,6 +28,8 @@ export class Game
 		this.api = new API();
 		
 		this.ui = new UI( this );
+
+		this.client = new Client();
 
 		this.api.get('API/LoginState',( data )=>
 		{
@@ -37,7 +47,7 @@ export class Game
 
 		scope.ui.appedTopInfo('Welcome Back!');
 		scope.ui.gameUI();	
-		this.initKeysHandler();
+		this.ketFunc();
 
 	}
 
@@ -45,21 +55,31 @@ export class Game
 	{
 
 		let scope = this;
+		
 		this.api.post('API/Login', data, ()=> scope.initGame(),() => scope.ui.appedTopInfo('Invalid username or password') );
 
 	}
 
-	public initKeysHandler(): void
+	public newMessage(): void
+	{
+		
+		let scope = this;
+
+
+
+	}
+
+	public ketFunc(): void
 	{
 		let g = this;
 
-		g.engine.inputHandler.regKeyFunc( "KeyT" ,() => { 
+		g.engine.inputHandler.regKeyFunc( g.keyFunctions.chat ,() => { 
 		
 			g.ui.openChatInput();
 
 		});
 
-		g.engine.inputHandler.regKeyFunc( "Escape" ,() => { 
+		g.engine.inputHandler.regKeyFunc( g.keyFunctions.cancel ,() => { 
 		
 			g.ui.closeChatInput();
 
