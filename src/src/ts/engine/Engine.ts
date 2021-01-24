@@ -32,12 +32,16 @@ export class Engine
 
 	public loadManager: LoadManager;
 
+
 	constructor()
 	{
 		this.deltaTime = this.fixedTimeStep;
 		this.clock = new THREE.Clock();
 
 		this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
+		this.camera.position.set(10,10,10);
+
+		this.camera.lookAt(new THREE.Vector3(0,0,0));
 
 		this.renderer = new THREE.WebGLRenderer();
 		this.graphics = new THREE.Scene();
@@ -45,7 +49,23 @@ export class Engine
 
 		this.physics.gravity.set(0, -9.81, 0)
 
+		this.inputHandler = new InputHandler();
+		this.loadManager = new LoadManager();
+		this.initSky();
+		
+		this.loadManager.LoadGLTF("http://127.0.0.1:8000/static/assets/map.glb", (gltf) => this.loadMap(gltf));
 
+		this.renderer.setSize( window.innerWidth, window.innerHeight );
+
+		this.cannonDebugRenderer = new CannonDebugRenderer( this.graphics, this.physics );
+		
+		document.body.appendChild( this.renderer.domElement );
+
+		this.update();
+	}
+
+	public initSky(): void
+	{
 		//TEMP
 		this.sky = new Sky();
 		this.sky.scale.setScalar( 450000 );
@@ -82,24 +102,6 @@ export class Engine
 		this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
 		this.renderer.toneMappingExposure = 0.5;
 		this.renderer.toneMappingExposure = effectController.exposure;
-
-		this.renderer.render( this.graphics, this.camera );
-
-		this.inputHandler = new InputHandler();
-		this.loadManager = new LoadManager();
-			
-		this.renderer.setSize( window.innerWidth, window.innerHeight );
-
-		this.cannonDebugRenderer = new CannonDebugRenderer( this.graphics, this.physics );
-		
-		document.body.appendChild( this.renderer.domElement );
-
-		this.update();
-	}
-
-	public initSky(): void
-	{
-
 	}
 
 	public update(): void
@@ -142,13 +144,16 @@ export class Engine
 
 	        if (child.userData.physics) {
 
+	        	let pos = new CANNON.Vec3( cp.x, cp.y, cp.z );
+	        	let quat = new CANNON.Quaternion(cq.x, cq.y, cq.z, cq.w );
+
 	          	if (child.userData.type === "box") {
 
 	          		let body = new CANNON.Body({
 	          			mass: 0,
-						position: new CANNON.Vec3( cp.x, cp.y, cp.z ),
+						position: pos,
 	          			shape: new CANNON.Box( new CANNON.Vec3( cs.x, cs.y, cs.z) ),
-	          			quaternion: new CANNON.Quaternion( cq.x, cq.y, cq.z, cq.w )
+	          			quaternion: quat
 	          		});
 
 	          		p.addBody( body );

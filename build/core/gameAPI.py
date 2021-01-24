@@ -11,14 +11,7 @@ def user(request, user_id):
 
 	own_profile = True if u == request.user else False
 
-	following_user = u.followers.filter(id__in=f'{request.user.id}')	
-
-	following_user = True if following_user else False	
-
 	return JsonResponse({'username' : u.username,
 	 'user_id' : u.id,
-	 'followers': u.followers.count(),
-	 'following': u.following.count(),
-	 'own_profile' : own_profile,
-	 'following_user': following_user,
+	 'own_profile' : own_profile
 	})

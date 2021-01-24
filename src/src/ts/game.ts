@@ -30,10 +30,40 @@ export class Game
 
 	}
 
-	public initGame()
+	public initGame(): void
 	{
-		this.ui.appedTopInfo('Welcome Back!');
-		this.ui.gameUI();	
+
+		let scope = this;
+
+		scope.ui.appedTopInfo('Welcome Back!');
+		scope.ui.gameUI();	
+		this.initKeysHandler();
+
+	}
+
+	public Login( data: any ): void
+	{
+
+		let scope = this;
+		this.api.post('API/Login', data, ()=> scope.initGame(),() => scope.ui.appedTopInfo('Invalid username or password') );
+
+	}
+
+	public initKeysHandler(): void
+	{
+		let g = this;
+
+		g.engine.inputHandler.regKeyFunc( "KeyT" ,() => { 
+		
+			g.ui.openChatInput();
+
+		});
+
+		g.engine.inputHandler.regKeyFunc( "Escape" ,() => { 
+		
+			g.ui.closeChatInput();
+
+		});
 
 	}
 

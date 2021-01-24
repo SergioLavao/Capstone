@@ -1,3 +1,5 @@
+import { HandlerFunction } from "./HandlerClasses";
+
 export class InputHandler
 {
 
@@ -6,7 +8,8 @@ export class InputHandler
 	public mouseX : number = 0;
 	public mouseY : number = 0;
 
-	public keyEvents: any[] = [];
+	public keyEvents: any = {};
+	public keyFunctions: any = {}; 
 
 	constructor()
 	{
@@ -48,15 +51,31 @@ export class InputHandler
 
 		document.addEventListener('keydown', (event) => {
 
-			handler.keyEvents[event.code] = true;
+			if (handler.keyEvents[event.code])
+				return	handler.keyEvents[event.code].enabled = true;
+
+			if (handler.keyFunctions[event.code])
+				handler.keyFunctions[event.code].f();
 
 		});
 
 		document.addEventListener('keyup', (event) => {
 
-			delete handler.keyEvents[event.code];
+			if (handler.keyEvents[event.code])
+				return	handler.keyEvents[event.code].enabled = false;
 
 		});
 
 	}
+
+	public regKeyFunc( keyCode:string , handlerFunction:any ): void
+	{
+
+		if( this.keyFunctions[keyCode] )
+			return console.log(`Cannot register key function... ${keyCode} its already used!`)
+
+		this.keyFunctions[keyCode] = new HandlerFunction( handlerFunction );
+
+	}
+
 }

@@ -3,6 +3,10 @@ export declare class UI {
     game: Game;
     constructor(game: Game);
     initScreen(): void;
-    appedTopInfo(msg: string, msTime?: number): void;
     gameUI(): void;
+    chat(): void;
+    openChatInput(): void;
+    closeChatInput(): void;
+    appendToChat(msg: string): void;
+    appedTopInfo(msg: string, msTime?: number): void;
 }

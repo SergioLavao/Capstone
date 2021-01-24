@@ -9,4 +9,6 @@ export declare class Game {
     api: API;
     constructor();
     initGame(): void;
+    Login(data: any): void;
+    initKeysHandler(): void;
 }

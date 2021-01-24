@@ -9,6 +9,7 @@ export class UI
 
 	constructor(game: Game)
 	{
+	
 		this.game = game;
 
 		$(document.body).append(`
@@ -16,6 +17,7 @@ export class UI
 			<div id="topInfo"></div>
 			<div id="gameDebug"></div>
 			</div>`);
+	
 	}
 
 	public initScreen(): void
@@ -43,7 +45,7 @@ export class UI
 			</form>
 		</div>`;
 
-		$('#ui-container').append(content);			
+		$('#ui-container').append(content);					
 
 		$( "form" ).submit(function (e) {
 
@@ -51,27 +53,59 @@ export class UI
 
 			let data = new FormData(document.getElementById('loginForm') as HTMLFormElement);
 
-			scope.game.api.post('API/Login', data, ()=> scope.game.initGame(),() => scope.appedTopInfo('Invalid username or password') );
+			scope.game.Login( data );
 
 		});
 
 	}
 
+	public gameUI(): void
+	{
+		
+		$("#initScreen").remove();		
+		this.chat();
+
+	}
+
+	public chat(): void
+	{
+
+		let content = 
+		`<div id="chat"></div>`;
+		$('#ui-container').append(content);			
+
+	}
+
+	public openChatInput(): void
+	{
+
+		console.log("chat openned!");
+
+	}
+
+	public closeChatInput(): void
+	{
+		console.log("chat closed");
+	}
+
+	public appendToChat( msg:string ): void
+	{
+
+		let deltaMsg = `<p class="msgElement">${msg}</p>`;
+		$('#chat').append(deltaMsg);
+
+	}
+
 	public appedTopInfo( msg : string , msTime : number = 2000):void
 	{
+
 		let id = '#topInfo';
 
 		$(id).html(msg);			
-
 		$(id).animate({opacity: 1}, 500);
 		$(id).delay(500).animate({opacity: 1}, msTime);
 		$(id).delay(msTime).animate({opacity: 0}, 500);
 
-	}
-
-	public gameUI(): void
-	{
-		$("#initScreen").remove();
 	}
 
 }
