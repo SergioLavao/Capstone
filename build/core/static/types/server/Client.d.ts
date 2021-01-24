@@ -1,4 +1,6 @@
+import { Emitter } from "./Emitter";
 export declare class Client {
-    io: any;
+    socket: any;
+    emitter: Emitter;
     constructor();
 }

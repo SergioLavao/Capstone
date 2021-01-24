@@ -13,6 +13,5 @@ export declare class Game {
     constructor();
     initGame(): void;
     Login(data: any): void;
-    newMessage(): void;
     ketFunc(): void;
 }

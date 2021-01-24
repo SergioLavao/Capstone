@@ -1,18 +1,25 @@
 import { io } from "socket.io-client";
+import { Emitter } from "./Emitter";
 
 export class Client
 {
 
-	public io: any;
+	public socket: any;
+	public emitter: Emitter;
 
 	constructor()
 	{
+		let scope = this;
 		
-		this.io = io("http://127.0.0.1:9000");
+		this.socket = io("http://127.0.0.1:9000");
 
-		this.io.on('connection', (socket) => {
+		this.socket.on('connect', () => {
 
-			console.log("connected successfully", socket.id);
+			let socket = this.socket
+
+			console.log("connected successfully", socket.id );
+
+			scope.emitter = new Emitter( socket );
 
 		});
 	

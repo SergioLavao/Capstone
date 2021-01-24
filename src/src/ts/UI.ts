@@ -81,15 +81,15 @@ export class UI
 
 		let scope = this;
 
-		$('#chat').append(`<form id="chatInput"><input name="message" placeholder="Type a new message..." type="text"></form>`);			
+		$('#chat').append(`<form id="chatInput"><input id="msgI" name="message" placeholder="Type a new message..." type="text"></form>`);			
 
 		$( "#chat" ).submit(function (e) {
 
 			e.preventDefault();
 
-			let data = new FormData(document.getElementById("chatInput") as HTMLFormElement);
+			let data = (document.getElementById("msgI") as HTMLInputElement).value;
 
-			console.log("chat appended!");
+			scope.game.client.emitter.newMessage( data );
 
 			scope.closeChatInput();
 

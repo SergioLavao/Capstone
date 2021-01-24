@@ -5,11 +5,11 @@ const setUpListeners = (io, socket) =>
 {
 	Promise.promisifyAll(socket);
 
-	var clients = io.sockets.sockets;
+	socket.on('message', (data) => { 
 
-	console.log("new user connected!");
+		console.log(socket.id, data); 
 
-	clients.forEach((client) => console.log(client.id));
+	});
 
 };
 

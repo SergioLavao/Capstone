@@ -18,7 +18,8 @@ export class Game
 
 	public keyFunctions: any = {
 		chat : "KeyT",
-		cancel : "Escape"
+		cancel : "Escape",
+		confirm : "Enter"
 	};
 
 	constructor()
@@ -60,28 +61,20 @@ export class Game
 
 	}
 
-	public newMessage(): void
-	{
-		
-		let scope = this;
-
-
-
-	}
-
 	public ketFunc(): void
 	{
+
 		let g = this;
-
-		g.engine.inputHandler.regKeyFunc( g.keyFunctions.chat ,() => { 
-		
-			g.ui.openChatInput();
-
-		});
 
 		g.engine.inputHandler.regKeyFunc( g.keyFunctions.cancel ,() => { 
 		
 			g.ui.closeChatInput();
+
+		});
+
+		g.engine.inputHandler.regKeyFunc( g.keyFunctions.chat ,() => { 
+		
+			g.ui.openChatInput();
 
 		});
 
