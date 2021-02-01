@@ -89,8 +89,6 @@ export class UI
 
 			let data = (document.getElementById("msgI") as HTMLInputElement).value;
 
-			scope.game.client.emitter.newMessage( data );
-
 			scope.closeChatInput();
 
 		});

@@ -1,6 +1,8 @@
 import * as $ from 'jquery';
 
 import '../css/main.css';
+
+import { Character } from "./character/Character";
 import { Engine } from './engine/Engine';
 import { Client } from "./server/Client";
 import { API } from './API';
@@ -25,12 +27,14 @@ export class Game
 	constructor()
 	{
 
+		let scope = this;
+
 		this.engine = new Engine();
 		this.api = new API();
 		
 		this.ui = new UI( this );
 
-		this.client = new Client();
+		this.client = new Client(( emitter )=>{ scope.engine.character = new Character( scope.engine , emitter ) } );
 
 		this.api.get('API/LoginState',( data )=>
 		{

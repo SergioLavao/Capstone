@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import * as CANNON from 'cannon';
 
 import { CannonDebugRenderer } from '../physics/CannonDebugRenderer';
+import { Character } from '../character/Character';
 import { InputHandler } from '../core/inputHandler/InputHandler';
 import { LoadManager } from '../core/LoadManager';
 import { Updatable } from '../interfaces/Updatable';
@@ -32,9 +33,12 @@ export class Engine
 
 	public loadManager: LoadManager;
 
+	public character: Character;
+
 
 	constructor()
 	{
+
 		this.deltaTime = this.fixedTimeStep;
 		this.clock = new THREE.Clock();
 
@@ -62,6 +66,7 @@ export class Engine
 		document.body.appendChild( this.renderer.domElement );
 
 		this.update();
+	
 	}
 
 	public initSky(): void

@@ -2,6 +2,7 @@ const path = require("path");
 
 module.exports = {
 	mode:"development",
+	watch:true,
 	entry:"./src/ts/game.ts",
 	output:{
 		filename:"game.js",

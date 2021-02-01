@@ -10,10 +10,17 @@ export class Emitter
 
 	}
 
-	public newMessage( msg : string )
+	public newMessage( msg : string ): void
 	{
 
 		this.socket.emit("message", msg);
+
+	}
+
+	public updateClient( charData: any ): void
+	{
+
+		this.socket.emit( "update_client" , charData );
 
 	}
 

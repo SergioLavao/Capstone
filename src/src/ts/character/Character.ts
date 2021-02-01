@@ -6,10 +6,15 @@ import { Updatable } from '../interfaces/Updatable';
 import { Engine } from '../engine/Engine';
 import { Utils } from '../core/Utils';
 
+import { Emitter } from "../server/Emitter";
+
+
 export class Character implements Updatable
 {
 
 	public engine: Engine;
+
+	public char_emitter: Emitter;
 
 	//PhysicsProps
 	public characterPhysics: CANNON.Body;
@@ -23,26 +28,36 @@ export class Character implements Updatable
 
 	public utils: Utils = new Utils();
 
-
 	public angleY: number = 0;
 
 	public isAiming: boolean = true;
 
 	public _m4 = new THREE.Matrix4();
 
-	constructor(engine: Engine, spawnChild: any)
-	{
+	constructor(engine: Engine, emitter: Emitter)
+	{ 
 		
 		this.engine = engine;	
-		this.childInfo = spawnChild;
+		this.char_emitter = emitter;
 		this.initCharacter();
 
 		this.engine.updatables.push( this );
 
 	}
-
+ 
 	public update( deltaTime: number )
 	{
+		let cp = this.characterPhysics;
+
+
+		this.char_emitter.updateClient({
+			pos:
+			{
+				x: cp.position.x,
+				y: cp.position.y,
+				z: cp.position.z
+			}
+		});
 
 	}
 
@@ -51,16 +66,15 @@ export class Character implements Updatable
 
 		let c = this;
 		let e = c.engine;
-		let cp = c.childInfo.position;
-		let cq = c.childInfo.quaternion;
 
 		let char = c.characterPhysics;
 
 		this.characterPhysics = new CANNON.Body
 		({ 
+
 			mass : c.mass, //c.mass,
-			position: new CANNON.Vec3( cp.x, cp.y, cp.z ),
-  			quaternion: new CANNON.Quaternion( cq.x, cq.y, cq.z, cq.w )
+			position: new CANNON.Vec3( 0 , 3 , 0 )
+
 		}); 
 
 

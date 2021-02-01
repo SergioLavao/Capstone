@@ -5,10 +5,15 @@ const setUpListeners = (io, socket) =>
 {
 	Promise.promisifyAll(socket);
 
-	socket.on('message', (data) => { 
+	socket.on('message', ( data ) => { 
 
 		console.log(socket.id, data); 
 
+	});
+
+	socket.on("update_client", ( data )=>
+	{
+		console.log( data )
 	});
 
 };

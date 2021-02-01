@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import * as CANNON from 'cannon';
 import { CannonDebugRenderer } from '../physics/CannonDebugRenderer';
+import { Character } from '../character/Character';
 import { InputHandler } from '../core/inputHandler/InputHandler';
 import { LoadManager } from '../core/LoadManager';
 import { Updatable } from '../interfaces/Updatable';
@@ -19,6 +20,7 @@ export declare class Engine {
     clock: THREE.Clock;
     deltaTime: number;
     loadManager: LoadManager;
+    character: Character;
     constructor();
     initSky(): void;
     update(): void;
